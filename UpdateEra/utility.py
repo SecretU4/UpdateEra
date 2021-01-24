@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: cp949 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import print_function
 
@@ -9,7 +9,7 @@ __all__ = ['writeExceptionTo', 'log', 'LRU']
 
 
 def writeExceptionTo(e, printfunc):
-    printfunc(u'\t(ø°∑Ø ≥ªøÎ): ')
+    printfunc(u'\t(ÏóêÎü¨ ÎÇ¥Ïö©): ')
     for i in e.args:
         printfunc(u'\t%s' % unicode(i))
 

@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: cp949 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import collections
@@ -25,7 +25,7 @@ def dirFileList(rootname):
     raise Exception when rootname is invalid directory or read fails
     """
     if not os.path.isdir(rootname):
-        raise IOError(u'%s µğ·ºÅä¸®°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.' % rootname)
+        raise IOError(u'%s ë””ë ‰í† ë¦¬ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.' % rootname)
     rootpath = os.path.abspath(unicode(rootname))
 
     ret = set()
@@ -57,7 +57,7 @@ class FileActionItem(object):
         self.description = description
 
 def isAvailableAction(case, action):
-    ''' ÀÚµ¿°¨Áö·Î ¾µ ¼ö ÀÖ´Â°¡ '''
+    ''' ìë™ê°ì§€ë¡œ ì“¸ ìˆ˜ ìˆëŠ”ê°€ '''
     if action == 'update' or action == 'update-hash':
         return case == 1
     elif action == 'copy-oo':
@@ -85,8 +85,8 @@ def update_handler(config, fn, output_category, riw, report_case, report_case_fa
     try:
         ensureDir(nt_path)
     except Exception as e:
-        writeExceptionTo(Exception('µğ·ºÅä¸® »ı¼º Áß ¿¡·¯: %s' % nt_path, e), log)
-        #Directory »ı¼º¿¡ ½ÇÆĞÇßÀ¸¹Ç·Î doFailedCopy´Â ºÎ¸£Áö ¾Ê´Â´Ù
+        writeExceptionTo(Exception('ë””ë ‰í† ë¦¬ ìƒì„± ì¤‘ ì—ëŸ¬: %s' % nt_path, e), log)
+        #Directory ìƒì„±ì— ì‹¤íŒ¨í–ˆìœ¼ë¯€ë¡œ doFailedCopyëŠ” ë¶€ë¥´ì§€ ì•ŠëŠ”ë‹¤
         report_summary[report_case_failed].append(fn)
         return
 
@@ -96,7 +96,7 @@ def update_handler(config, fn, output_category, riw, report_case, report_case_fa
         f_no = filehandler.open(no_path, False, no_encoding, no_autodetect)
         f_nt = filehandler.open(nt_path, True, nt_encoding, nt_autodetect)
     except Exception as e:
-        writeExceptionTo(Exception('ÆÄÀÏÀ» ¿©´Â Áß ¿¡·¯ (±ÇÇÑ ¹®Á¦ÀÎÁö È®ÀÎÇÏ¼¼¿ä)', e), log)
+        writeExceptionTo(Exception('íŒŒì¼ì„ ì—¬ëŠ” ì¤‘ ì—ëŸ¬ (ê¶Œí•œ ë¬¸ì œì¸ì§€ í™•ì¸í•˜ì„¸ìš”)', e), log)
         doFailedCopy(fn, no_basepath, nt_basepath, config['Failed_Out'])
         report_summary[report_case_failed].append(fn)
         return
@@ -130,22 +130,22 @@ def copy_no_handler(config, fn, output_category, riw, report_case, report_case_f
     copy_handler(config, fn, src_info, dst_info, output_category, riw, report_case, report_case_failed, report_case_stay, report_summary)
 
 def ignore_handler(config, fn, output_category, riw, report_case, report_case_failed, report_case_stay, report_summary):
-    log(u'¹«½ÃÇÕ´Ï´Ù.')
+    log(u'ë¬´ì‹œí•©ë‹ˆë‹¤.')
     pass
 
 actionList = collections.OrderedDict([
-    ('update'        , FileActionItem(update_handler, u'¾÷µ¥ÀÌÆ®',)),
-    ('update-hash'   , FileActionItem(update_hash_handler, u'¾÷µ¥ÀÌÆ®(Hash ¹ø¿ª¸¸ »ç¿ë)',)),
-    ('copy-oo'       , FileActionItem(copy_oo_handler, u'±¸¹öÀü ¿øº» º¹»ç')),
-    ('copy-ot'       , FileActionItem(copy_ot_handler, u'±¸¹öÀü ¹ø¿ªº» º¹»ç')),
-    ('copy-no'       , FileActionItem(copy_no_handler, u'½Å¹öÀü ¿øº» º¹»ç')),
-    (''              , FileActionItem(ignore_handler, u'¹«½Ã')),
+    ('update'        , FileActionItem(update_handler, u'ì—…ë°ì´íŠ¸',)),
+    ('update-hash'   , FileActionItem(update_hash_handler, u'ì—…ë°ì´íŠ¸(Hash ë²ˆì—­ë§Œ ì‚¬ìš©)',)),
+    ('copy-oo'       , FileActionItem(copy_oo_handler, u'êµ¬ë²„ì „ ì›ë³¸ ë³µì‚¬')),
+    ('copy-ot'       , FileActionItem(copy_ot_handler, u'êµ¬ë²„ì „ ë²ˆì—­ë³¸ ë³µì‚¬')),
+    ('copy-no'       , FileActionItem(copy_no_handler, u'ì‹ ë²„ì „ ì›ë³¸ ë³µì‚¬')),
+    (''              , FileActionItem(ignore_handler, u'ë¬´ì‹œ')),
 ])
 
 def doFailedCopy(fn, src_basepath, dst_basepath, dst_category):
-    '''fallback¿ë. ±×³É ÆÄÀÏ º¹»ç¸¸ ½Ãµµ.'''
-    '''ExceptionÀº ³»¹ñÁö ¸»°Í'''
-    log(u'<½ÇÆĞ> ´Ü¼øº¹»ç¸¦ ½ÃµµÇÕ´Ï´Ù.')
+    '''fallbackìš©. ê·¸ëƒ¥ íŒŒì¼ ë³µì‚¬ë§Œ ì‹œë„.'''
+    '''Exceptionì€ ë‚´ë±‰ì§€ ë§ê²ƒ'''
+    log(u'<ì‹¤íŒ¨> ë‹¨ìˆœë³µì‚¬ë¥¼ ì‹œë„í•©ë‹ˆë‹¤.')
     
     src_path = os.path.join(src_basepath, fn)
     dst_path = os.path.join(dst_basepath, dst_category, fn)
@@ -154,11 +154,11 @@ def doFailedCopy(fn, src_basepath, dst_basepath, dst_category):
         ensureDir(dst_path)
         shutil.copy(src_path, dst_path)
     except Exception as e:
-        log('ÆÄÀÏ º¹»ç Áß ¿¡·¯: %s -> %s' % (src_path, dst_path))
+        log('íŒŒì¼ ë³µì‚¬ ì¤‘ ì—ëŸ¬: %s -> %s' % (src_path, dst_path))
         log(e)
 
 def copy_handler(config, fn, src_info, dst_info, output_category, riw, report_case, report_case_failed, report_case_stay, report_summary):
-    '''ÆÄÀÏº¹»ç. RI ÀÖÀ¸¸é ½Ãµµ, ÀÎÄÚµù º¯°æ.'''
+    '''íŒŒì¼ë³µì‚¬. RI ìˆìœ¼ë©´ ì‹œë„, ì¸ì½”ë”© ë³€ê²½.'''
     src_basepath, src_encoding, src_autodetect = src_info
     dst_basepath, dst_encoding, dst_autodetect = dst_info
 
@@ -168,8 +168,8 @@ def copy_handler(config, fn, src_info, dst_info, output_category, riw, report_ca
     try:
         ensureDir(dst_path)
     except Exception as e:
-        writeExceptionTo(Exception('µğ·ºÅä¸® »ı¼º Áß ¿¡·¯: %s' % nt_path, e), log)
-        #Directory »ı¼º¿¡ ½ÇÆĞÇßÀ¸¹Ç·Î doFailedCopy´Â ºÎ¸£Áö ¾Ê´Â´Ù
+        writeExceptionTo(Exception('ë””ë ‰í† ë¦¬ ìƒì„± ì¤‘ ì—ëŸ¬: %s' % nt_path, e), log)
+        #Directory ìƒì„±ì— ì‹¤íŒ¨í–ˆìœ¼ë¯€ë¡œ doFailedCopyëŠ” ë¶€ë¥´ì§€ ì•ŠëŠ”ë‹¤
         report_summary[report_case_failed].append(fn)
         return
 
@@ -177,7 +177,7 @@ def copy_handler(config, fn, src_info, dst_info, output_category, riw, report_ca
         f_src = filehandler.open(src_path, False, src_encoding, src_autodetect)
         f_dst = filehandler.open(dst_path, True, dst_encoding, dst_autodetect)
     except Exception as e:
-        writeExceptionTo(Exception('ÆÄÀÏÀ» ¿©´Â Áß ¿¡·¯ (±ÇÇÑ ¹®Á¦ÀÎÁö È®ÀÎÇÏ¼¼¿ä)', e), log)
+        writeExceptionTo(Exception('íŒŒì¼ì„ ì—¬ëŠ” ì¤‘ ì—ëŸ¬ (ê¶Œí•œ ë¬¸ì œì¸ì§€ í™•ì¸í•˜ì„¸ìš”)', e), log)
         doFailedCopy(fn, no_basepath, nt_basepath, config['Failed_Out'])
         report_summary[report_case_failed].append(fn)
         return
@@ -244,7 +244,7 @@ def handleFile(config, fn, file_exist, riw, report_summary):
 
     elif (not exist_oo) and (exist_ot) and (exist_no):
         #case 5: RARE CASE - original in translated version & commited to updated version?!
-        #º»°¡¿¡ ¸¶¼ö¸¦ ³¢Ä¡´Â ½Ã´ë°¡ ¿À¸é °¡´ÉÇÑ ÄÉÀÌ½º°ÚÁö
+        #ë³¸ê°€ì— ë§ˆìˆ˜ë¥¼ ë¼ì¹˜ëŠ” ì‹œëŒ€ê°€ ì˜¤ë©´ ê°€ëŠ¥í•œ ì¼€ì´ìŠ¤ê² ì§€
         #copy no (+ri)
         current_action = actionList[config['Case5_Action']]
         output_category = config['Case5_Out']
@@ -278,20 +278,20 @@ def batchwork(config):
     return exitcode
     """
 
-    #Phase 1: µğ·ºÅä¸® ±¸Á¶ ÀĞ±â
+    #Phase 1: ë””ë ‰í† ë¦¬ êµ¬ì¡° ì½ê¸°
 
-    log(u'µğ·ºÅä¸® ±¸Á¶¸¦ ÀĞ´Â ÁßÀÔ´Ï´Ù...')
+    log(u'ë””ë ‰í† ë¦¬ êµ¬ì¡°ë¥¼ ì½ëŠ” ì¤‘ì…ë‹ˆë‹¤...')
 
     def generateFileList(config):
         filelist_oo = dirFileList(config['OO_Directory'])
         filelist_ot = dirFileList(config['OT_Directory'])
         filelist_no = dirFileList(config['NO_Directory'])
         
-        #NT´Â ¾øÀ»°æ¿ì »õ·Î »ı¼º
+        #NTëŠ” ì—†ì„ê²½ìš° ìƒˆë¡œ ìƒì„±
         ensureDir(os.path.join(config['NT_Directory'], '.'))
 
         filelist_nt = set()
-        #NTÀÇ "ÇÏÀ§" µğ·ºÅä¸®ÀÇ ³»¿ëÀ» ÃëÇÕ
+        #NTì˜ "í•˜ìœ„" ë””ë ‰í† ë¦¬ì˜ ë‚´ìš©ì„ ì·¨í•©
         for dirname in os.listdir(config['NT_Directory']):
             dirpath = os.path.join(config['NT_Directory'], dirname)
             filelist_nt.update(dirFileList(dirpath))
@@ -299,11 +299,11 @@ def batchwork(config):
     try:
         filelist_oo, filelist_ot, filelist_no ,filelist_nt = generateFileList(config)
     except Exception as e:
-        log(u'µğ·ºÅä¸®¸¦ ÀĞ¾î¿Ã ¼ö ¾ø½À´Ï´Ù. µğ·ºÅä¸®°¡ ÀÖ´ÂÁö È®ÀÎÇØÁÖ¼¼¿ä.')
+        log(u'ë””ë ‰í† ë¦¬ë¥¼ ì½ì–´ì˜¬ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ë””ë ‰í† ë¦¬ê°€ ìˆëŠ”ì§€ í™•ì¸í•´ì£¼ì„¸ìš”.')
         writeExceptionTo(e, log)
         return -1
 
-    #Phase 2: Global Worker »ı¼º
+    #Phase 2: Global Worker ìƒì„±
 
     #ReplaceIndexWorker
     riw = None
@@ -311,30 +311,30 @@ def batchwork(config):
     ri_file = config['RI_File']
     if ri_file != u'':
         
-        log(u'Ä¡È¯Á¤º¸¸¦ ÀĞ´Â ÁßÀÔ´Ï´Ù...')
+        log(u'ì¹˜í™˜ì •ë³´ë¥¼ ì½ëŠ” ì¤‘ì…ë‹ˆë‹¤...')
 
         try:
             f_ri = filehandler.open(ri_file, False, config['RI_Encoding'], config['RI_Autodetect'])
         except Exception as e:
-            log(u'%s¸¦ ¿­ ¼ö ¾ø½À´Ï´Ù. ÆÄÀÏÀÌ ÀÖ´ÂÁö È®ÀÎÇØÁÖ¼¼¿ä.' % ri_file)
+            log(u'%së¥¼ ì—´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. íŒŒì¼ì´ ìˆëŠ”ì§€ í™•ì¸í•´ì£¼ì„¸ìš”.' % ri_file)
             writeExceptionTo(e, log)
             return -1
 
         try:
             riw = replaceindex.buildReplaceIndexWorker(f_ri, config['RI_Encoding'], config['RI_Autodetect'])
         except Exception as e:
-            log(u'%s¸¦ ÀĞ´Â Áß ¿¡·¯°¡ ¹ß»ıÇß½À´Ï´Ù.' % ri_file)
+            log(u'%së¥¼ ì½ëŠ” ì¤‘ ì—ëŸ¬ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.' % ri_file)
             writeExceptionTo(e, log)
             return -1
 
-    #Phase 3: ¸®Æ÷Æ® ÃÊ±âÈ­
+    #Phase 3: ë¦¬í¬íŠ¸ ì´ˆê¸°í™”
 
-    log(u'¸®Æ÷Æ®¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù...')
+    log(u'ë¦¬í¬íŠ¸ë¥¼ ì´ˆê¸°í™”í•©ë‹ˆë‹¤...')
 
     try:
         f_report = filehandler.open(config['Report_File'], True, 'utf-8-sig', 'no')
     except Exception as e:
-        log(u'%s¸¦ »ı¼ºÇÏ´Â Áß ¿¡·¯°¡ ¹ß»ıÇß½À´Ï´Ù.' % config['Report_File'])
+        log(u'%së¥¼ ìƒì„±í•˜ëŠ” ì¤‘ ì—ëŸ¬ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.' % config['Report_File'])
         writeExceptionTo(e, log)
         return -1
 
@@ -349,32 +349,32 @@ def batchwork(config):
             self.action = action
     
     report_summary = collections.OrderedDict([
-        ('case1_stay'   ,   ReportSummaryItem(u'[%s] ´ÙÀ½ ÆÄÀÏµéÀº º¯°æÁ¡ÀÌ ¾ø½À´Ï´Ù. (Case 1)' % config['Case1_Out'], config['Case1_RI'], config['Case1_Action'])),
-        ('case1'        ,   ReportSummaryItem(u'[%s] ´ÙÀ½ ÆÄÀÏµéÀº º¯°æÁ¡ÀÌ ÀÖ½À´Ï´Ù. (Case 1)' % config['Case1_Out'], config['Case1_RI'], config['Case1_Action'])),
-        ('case2'        ,   ReportSummaryItem(u'[%s] ´ÙÀ½ ÆÄÀÏµéÀº ½Å¹öÀü¿¡¼­ »èÁ¦µÇ¾ú½À´Ï´Ù. (Case 2)' % config['Case2_Out'], config['Case2_RI'], config['Case2_Action'])),
-        ('case3'        ,   ReportSummaryItem(u'[%s] ´ÙÀ½ ÆÄÀÏµéÀº ¹ø¿ªÀÌ µÇÁö ¾Ê¾Ò½À´Ï´Ù. (Case 3)' % config['Case3_Out'], config['Case3_RI'], config['Case3_Action'])),
-        ('case4'        ,   ReportSummaryItem(u'[%s] ´ÙÀ½ ÆÄÀÏµéÀº ½Å¹öÀü¿¡¼­ »èÁ¦µÇ¾ú½À´Ï´Ù. ¶ÇÇÑ ¹ø¿ªµµ ¾ø½À´Ï´Ù. (Case 4)' % config['Case4_Out'], config['Case4_RI'], config['Case4_Action'])),
-        ('case5'        ,   ReportSummaryItem(u'[%s] ´ÙÀ½ ÆÄÀÏµéÀº ±¸¹öÀü ¿øº»¿¡¸¸ ¾ø½À´Ï´Ù. (Case 5)' % config['Case5_Out'], config['Case5_RI'], config['Case5_Action'])),
-        ('case6'        ,   ReportSummaryItem(u'[%s] ´ÙÀ½ ÆÄÀÏµéÀº ±¸¹öÀü ¹ø¿ªº»¿¡¸¸ ÀÖ½À´Ï´Ù. (Case 6)' % config['Case6_Out'], config['Case6_RI'], config['Case6_Action'])),
-        ('case7'        ,   ReportSummaryItem(u'[%s] ´ÙÀ½ ÆÄÀÏµéÀº ½Å¹öÀü¿¡¼­ »õ·Î »ı°å½À´Ï´Ù. (Case 7)' % config['Case7_Out'], config['Case7_RI'], config['Case7_Action'])),
+        ('case1_stay'   ,   ReportSummaryItem(u'[%s] ë‹¤ìŒ íŒŒì¼ë“¤ì€ ë³€ê²½ì ì´ ì—†ìŠµë‹ˆë‹¤. (Case 1)' % config['Case1_Out'], config['Case1_RI'], config['Case1_Action'])),
+        ('case1'        ,   ReportSummaryItem(u'[%s] ë‹¤ìŒ íŒŒì¼ë“¤ì€ ë³€ê²½ì ì´ ìˆìŠµë‹ˆë‹¤. (Case 1)' % config['Case1_Out'], config['Case1_RI'], config['Case1_Action'])),
+        ('case2'        ,   ReportSummaryItem(u'[%s] ë‹¤ìŒ íŒŒì¼ë“¤ì€ ì‹ ë²„ì „ì—ì„œ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤. (Case 2)' % config['Case2_Out'], config['Case2_RI'], config['Case2_Action'])),
+        ('case3'        ,   ReportSummaryItem(u'[%s] ë‹¤ìŒ íŒŒì¼ë“¤ì€ ë²ˆì—­ì´ ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. (Case 3)' % config['Case3_Out'], config['Case3_RI'], config['Case3_Action'])),
+        ('case4'        ,   ReportSummaryItem(u'[%s] ë‹¤ìŒ íŒŒì¼ë“¤ì€ ì‹ ë²„ì „ì—ì„œ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤. ë˜í•œ ë²ˆì—­ë„ ì—†ìŠµë‹ˆë‹¤. (Case 4)' % config['Case4_Out'], config['Case4_RI'], config['Case4_Action'])),
+        ('case5'        ,   ReportSummaryItem(u'[%s] ë‹¤ìŒ íŒŒì¼ë“¤ì€ êµ¬ë²„ì „ ì›ë³¸ì—ë§Œ ì—†ìŠµë‹ˆë‹¤. (Case 5)' % config['Case5_Out'], config['Case5_RI'], config['Case5_Action'])),
+        ('case6'        ,   ReportSummaryItem(u'[%s] ë‹¤ìŒ íŒŒì¼ë“¤ì€ êµ¬ë²„ì „ ë²ˆì—­ë³¸ì—ë§Œ ìˆìŠµë‹ˆë‹¤. (Case 6)' % config['Case6_Out'], config['Case6_RI'], config['Case6_Action'])),
+        ('case7'        ,   ReportSummaryItem(u'[%s] ë‹¤ìŒ íŒŒì¼ë“¤ì€ ì‹ ë²„ì „ì—ì„œ ìƒˆë¡œ ìƒê²¼ìŠµë‹ˆë‹¤. (Case 7)' % config['Case7_Out'], config['Case7_RI'], config['Case7_Action'])),
 
-        ('case1_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 1>> **½ÇÆĞ** ´ÙÀ½ ÆÄÀÏÀº ¾÷µ¥ÀÌÆ® Áß ¿¡·¯°¡ ³µ½À´Ï´Ù.' % config['Failed_Out'], False, '')),
-        ('case2_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 2>> **½ÇÆĞ** ´ÙÀ½ ÆÄÀÏÀº ¾÷µ¥ÀÌÆ® Áß ¿¡·¯°¡ ³µ½À´Ï´Ù.' % config['Failed_Out'], False, '')),
-        ('case3_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 3>> **½ÇÆĞ** ´ÙÀ½ ÆÄÀÏÀº ¾÷µ¥ÀÌÆ® Áß ¿¡·¯°¡ ³µ½À´Ï´Ù.' % config['Failed_Out'], False, '')),
-        ('case4_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 4>> **½ÇÆĞ** ´ÙÀ½ ÆÄÀÏÀº ¾÷µ¥ÀÌÆ® Áß ¿¡·¯°¡ ³µ½À´Ï´Ù.' % config['Failed_Out'], False, '')),
-        ('case5_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 5>> **½ÇÆĞ** ´ÙÀ½ ÆÄÀÏÀº ¾÷µ¥ÀÌÆ® Áß ¿¡·¯°¡ ³µ½À´Ï´Ù.' % config['Failed_Out'], False, '')),
-        ('case6_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 6>> **½ÇÆĞ** ´ÙÀ½ ÆÄÀÏÀº ¾÷µ¥ÀÌÆ® Áß ¿¡·¯°¡ ³µ½À´Ï´Ù.' % config['Failed_Out'], False, '')),
-        ('case7_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 7>> **½ÇÆĞ** ´ÙÀ½ ÆÄÀÏÀº ¾÷µ¥ÀÌÆ® Áß ¿¡·¯°¡ ³µ½À´Ï´Ù.' % config['Failed_Out'], False, '')),
+        ('case1_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 1>> **ì‹¤íŒ¨** ë‹¤ìŒ íŒŒì¼ì€ ì—…ë°ì´íŠ¸ ì¤‘ ì—ëŸ¬ê°€ ë‚¬ìŠµë‹ˆë‹¤.' % config['Failed_Out'], False, '')),
+        ('case2_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 2>> **ì‹¤íŒ¨** ë‹¤ìŒ íŒŒì¼ì€ ì—…ë°ì´íŠ¸ ì¤‘ ì—ëŸ¬ê°€ ë‚¬ìŠµë‹ˆë‹¤.' % config['Failed_Out'], False, '')),
+        ('case3_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 3>> **ì‹¤íŒ¨** ë‹¤ìŒ íŒŒì¼ì€ ì—…ë°ì´íŠ¸ ì¤‘ ì—ëŸ¬ê°€ ë‚¬ìŠµë‹ˆë‹¤.' % config['Failed_Out'], False, '')),
+        ('case4_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 4>> **ì‹¤íŒ¨** ë‹¤ìŒ íŒŒì¼ì€ ì—…ë°ì´íŠ¸ ì¤‘ ì—ëŸ¬ê°€ ë‚¬ìŠµë‹ˆë‹¤.' % config['Failed_Out'], False, '')),
+        ('case5_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 5>> **ì‹¤íŒ¨** ë‹¤ìŒ íŒŒì¼ì€ ì—…ë°ì´íŠ¸ ì¤‘ ì—ëŸ¬ê°€ ë‚¬ìŠµë‹ˆë‹¤.' % config['Failed_Out'], False, '')),
+        ('case6_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 6>> **ì‹¤íŒ¨** ë‹¤ìŒ íŒŒì¼ì€ ì—…ë°ì´íŠ¸ ì¤‘ ì—ëŸ¬ê°€ ë‚¬ìŠµë‹ˆë‹¤.' % config['Failed_Out'], False, '')),
+        ('case7_fail'   ,   ReportSummaryItem(u'[%s] <<ERROR @ Case 7>> **ì‹¤íŒ¨** ë‹¤ìŒ íŒŒì¼ì€ ì—…ë°ì´íŠ¸ ì¤‘ ì—ëŸ¬ê°€ ë‚¬ìŠµë‹ˆë‹¤.' % config['Failed_Out'], False, '')),
     ])
 
-    #Phase 4: ¹ø¿ª
+    #Phase 4: ë²ˆì—­
 
-    log(u'¹ø¿ªÀ» ½ÃÀÛÇÕ´Ï´Ù...')
+    log(u'ë²ˆì—­ì„ ì‹œì‘í•©ë‹ˆë‹¤...')
 
-    #ÀÛ¾÷¸ñ·Ï: (oo U ot U no) - nt
+    #ì‘ì—…ëª©ë¡: (oo U ot U no) - nt
     filelist_all = (filelist_oo | filelist_ot | filelist_no) - filelist_nt
 
-    #È­¸é ÁøÇà»óÈ² Ç¥½Ã¿ë
+    #í™”ë©´ ì§„í–‰ìƒí™© í‘œì‹œìš©
 
     count_total = len(filelist_all)
     count_current = 0
@@ -391,12 +391,12 @@ def batchwork(config):
             handleFile(config, fn, (exist_oo, exist_ot, exist_no), riw, report_summary)
 
             writeToReport(u'')
-            f_report.flush() #TODO: ÃÖÁ¾ÆÇ¿¡¼­ Áö¿ï°Í?
+            f_report.flush() #TODO: ìµœì¢…íŒì—ì„œ ì§€ìš¸ê²ƒ?
             
         
         count_current += 1
         if count_current % 10 == 0 or count_current == count_total:
-            log(u'== [%d/%d] ¿Ï·á' % (count_current, count_total))
+            log(u'== [%d/%d] ì™„ë£Œ' % (count_current, count_total))
 
     #Phase 5: Summary
 
@@ -408,7 +408,7 @@ u'''
 ########################################################################
 ########################################################################
 
-                          ÀÛ¾÷ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.
+                          ì‘ì—…ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.
 
 ########################################################################
 ########################################################################
@@ -422,14 +422,14 @@ u'''
 
             log(rsi.summaryheader)
             if rsi.action != '':
-                log(u'ÀÛ¾÷: %s' % actionList[rsi.action].description)
+                log(u'ì‘ì—…: %s' % actionList[rsi.action].description)
             if riw != None:
-                log({True: u'(Ä¡È¯ÀÌ Àû¿ëµÇ¾ú½À´Ï´Ù)', False: u'(Ä¡È¯Àº Àû¿ëµÇÁö ¾Ê½À´Ï´Ù)'}[rsi.applyRI])
+                log({True: u'(ì¹˜í™˜ì´ ì ìš©ë˜ì—ˆìŠµë‹ˆë‹¤)', False: u'(ì¹˜í™˜ì€ ì ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤)'}[rsi.applyRI])
             for i in sorted(rsi):
                 log(u' - %s' % i)
             log(u'')
     
-    log(u'ÀÛ¾÷ ¿Ï·á. %s¿¡ ¸®Æ÷Æ®°¡ ÀÛ¼ºµÇ¾ú½À´Ï´Ù.' % config['Report_File'])
+    log(u'ì‘ì—… ì™„ë£Œ. %sì— ë¦¬í¬íŠ¸ê°€ ì‘ì„±ë˜ì—ˆìŠµë‹ˆë‹¤.' % config['Report_File'])
 
     return 0
 

@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: cp949 -*-
+# -*- coding: utf-8 -*-
 
 import json
 import codecs
@@ -82,7 +82,7 @@ __settingEntry = {
     'Case7_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'new' ),
     'Failed_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'failed' ),
 
-    #°¢ case¿¡ Ä¡È¯À» Àû¿ëÇÒ °ÍÀÎ°¡?
+    #ê° caseì— ì¹˜í™˜ì„ ì ìš©í•  ê²ƒì¸ê°€?
 
     'Case1_RI': __entry( mandatory=False, encode=bool, decode=bool, default=True ),
     'Case2_RI': __entry( mandatory=False, encode=bool, decode=bool, default=False ),
@@ -92,7 +92,7 @@ __settingEntry = {
     'Case6_RI': __entry( mandatory=False, encode=bool, decode=bool, default=True ),
     'Case7_RI': __entry( mandatory=False, encode=bool, decode=bool, default=True ),
 
-    #°¢ caseº° ÀÛ¾÷
+    #ê° caseë³„ ì‘ì—…
 
     'Case1_Action': __entry( mandatory=False, encode=__action_check(1), decode=__action_check(1), default='update' ),
     'Case2_Action': __entry( mandatory=False, encode=__action_check(2), decode=__action_check(2), default='copy-ot' ),
@@ -102,13 +102,13 @@ __settingEntry = {
     'Case6_Action': __entry( mandatory=False, encode=__action_check(6), decode=__action_check(6), default='copy-ot' ),
     'Case7_Action': __entry( mandatory=False, encode=__action_check(7), decode=__action_check(7), default='copy-no' ),
 
-    #¸®Æ÷Æ® ÆÄÀÏ ÀÌ¸§
+    #ë¦¬í¬íŠ¸ íŒŒì¼ ì´ë¦„
     'Report_File': __entry( mandatory=True, encode=unicode, decode=unicode, default=u'report.txt' ),
 
-    #Hash ¹ø¿ª °­Á¦Àû¿ë ¿©ºÎ
+    #Hash ë²ˆì—­ ê°•ì œì ìš© ì—¬ë¶€
     'Force_Hash': __entry( mandatory=False, encode=bool, decode=bool, default=False ),
 
-    #TrimÀ» Àû¿ëÇÒ prefix character
+    #Trimì„ ì ìš©í•  prefix character
     'Trim_Prefix': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'' ),
 }
 
@@ -133,7 +133,7 @@ def saveSetting(fn, setting):
                 raise SettingEncodeError(e)
         else:
             if __settingEntry[i].mandatory:
-                raise SettingMissingError('%s°¡ ¾ø½À´Ï´Ù.' % i)
+                raise SettingMissingError('%sê°€ ì—†ìŠµë‹ˆë‹¤.' % i)
             #final[i] = __settingEntry[i].default
 
     with filehandler.open(fn, True, 'utf-8-sig', 'no') as f:
@@ -157,7 +157,7 @@ def loadSetting(fn):
                 raise SettingDecodeError(e)
         else:
             if __settingEntry[i].mandatory:
-                raise SettingMissingError(u'%s°¡ ¾ø½À´Ï´Ù.' % i)
+                raise SettingMissingError(u'%sê°€ ì—†ìŠµë‹ˆë‹¤.' % i)
             final[i] = __settingEntry[i].default
 
     return final

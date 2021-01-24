@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: cp949 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import print_function
 
@@ -15,8 +15,8 @@ def usage():
     print(VERSIONSTRING)
     print(
 '''
-»ç¿ë¹ı: UpdateEra È¯°æ¼³Á¤
-    È¯°æ¼³Á¤ ÆÄÀÏÀÇ Æ÷¸ËÀº µµ¿ò¸»À» ÂüÁ¶ÇÏ¼¼¿ä.
+ì‚¬ìš©ë²•: UpdateEra í™˜ê²½ì„¤ì •
+    í™˜ê²½ì„¤ì • íŒŒì¼ì˜ í¬ë§·ì€ ë„ì›€ë§ì„ ì°¸ì¡°í•˜ì„¸ìš”.
 '''
     )
 
@@ -31,14 +31,14 @@ def main():
         try:
             config = setting.loadSetting(sys.argv[1])
         except Exception as e:
-            log(u'¼³Á¤À» ºÒ·¯¿À´Â µ¥ ½ÇÆĞÇß½À´Ï´Ù: %s' % sys.argv[1])
+            log(u'ì„¤ì •ì„ ë¶ˆëŸ¬ì˜¤ëŠ” ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤: %s' % sys.argv[1])
             writeExceptionTo(e, log)
             return 3
 
         import time
         start_time = time.time()
         ret = batchwork.batchwork(config)
-        log("ÀÛ¾÷ ½Ã°£: %dÃÊ" % int(time.time() - start_time))
+        log("ì‘ì—… ì‹œê°„: %dì´ˆ" % int(time.time() - start_time))
         return ret
 
 

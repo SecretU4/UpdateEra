@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: cp949 -*-
+# -*- coding: utf-8 -*-
 
 import re
 import os
@@ -59,7 +59,7 @@ def buildReplaceIndex(f_replaceindex, ri_encoding, ri_autodetect):
 
         if len(lines) != 0:
             l = lines[0].upper()
-            #flag Ã³¸®
+            #flag ì²˜ë¦¬
             if l.startswith(u'[-')  and l.endswith(u'-]'):
                 n = 1
                 if l.find('[-WORDWRAP-]') != -1:
@@ -71,7 +71,7 @@ def buildReplaceIndex(f_replaceindex, ri_encoding, ri_autodetect):
                 if l.find('[-SORT-]') != -1:
                     sortbylength = True
                 if regex and sortbylength:
-                    raise ReplaceIndexError(u'[-REGEX-] ¹× [-SORT-]´Â °°ÀÌ ¾²ÀÏ ¼ö ¾ø½À´Ï´Ù.' % n)
+                    raise ReplaceIndexError(u'[-REGEX-] ë° [-SORT-]ëŠ” ê°™ì´ ì“°ì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.' % n)
 
         while n < len(lines):
             l = trim(lines[n])
@@ -107,7 +107,7 @@ def buildReplaceIndex(f_replaceindex, ri_encoding, ri_autodetect):
         while n < len(lines):
             if lines[n] == u'[Search]':
                 if lines[n + 2] != u'[Replace]':
-                    raise ReplaceIndexError(u'Àß¸øµÈ SRS Æ÷¸ËÀÔ´Ï´Ù. (line %d)' % n)
+                    raise ReplaceIndexError(u'ì˜ëª»ëœ SRS í¬ë§·ì…ë‹ˆë‹¤. (line %d)' % n)
                 find = lines[n + 1]
                 replace = lines[n + 3]
                 n += 3
@@ -137,7 +137,7 @@ def buildReplaceIndex(f_replaceindex, ri_encoding, ri_autodetect):
 
 
 
-    #format °ËÁõ
+    #format ê²€ì¦
 
     lines = f_replaceindex.readlines()
     fnroot, ext = os.path.splitext(f_replaceindex.name)
@@ -150,7 +150,7 @@ def buildReplaceIndex(f_replaceindex, ri_encoding, ri_autodetect):
     elif ext.upper() == '.RICHAIN':
         ri = buildReplaceIndex_RICHAIN(lines, ri_encoding, ri_autodetect)
     else:
-        raise ReplaceIndexError(u'%s°¡ ¹«½¼ Æ÷¸ËÀÎÁö ¾Ë ¼ö ¾ø½À´Ï´Ù.' % f_replaceindex.name) #unknown format
+        raise ReplaceIndexError(u'%sê°€ ë¬´ìŠ¨ í¬ë§·ì¸ì§€ ì•Œ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.' % f_replaceindex.name) #unknown format
     return ri
 
 
@@ -161,14 +161,14 @@ def buildReplaceIndexWorker(f_replaceindex, ri_encoding, ri_autodetect):
     raise ReplaceIndexError for non-IO error
     """
     
-    return translate.CachedWorker(ReplaceIndexWorker(buildReplaceIndex(f_replaceindex, ri_encoding, ri_autodetect)), 10000) #cache size ÇÊ¿ä½Ã Á¶Á¤
+    return translate.CachedWorker(ReplaceIndexWorker(buildReplaceIndex(f_replaceindex, ri_encoding, ri_autodetect)), 10000) #cache size í•„ìš”ì‹œ ì¡°ì •
 
 
 #Hash-based RI Agent
 
 class ReplaceIndexWorker(object):
     def __init__(self, replaceindex):
-        '''¿©±ä replaceindex != NoneÀÌ¾î¾ß ÇÑ´Ù. Àû¿ë ¾ÈÇÒ°Å¸é ¹Û¿¡¼­ Ã³¸®ÇÒ°Í'''
+        '''ì—¬ê¸´ replaceindex != Noneì´ì–´ì•¼ í•œë‹¤. ì ìš© ì•ˆí• ê±°ë©´ ë°–ì—ì„œ ì²˜ë¦¬í• ê²ƒ'''
         self.replaceindex = replaceindex        
 
     def __call__(self, x):

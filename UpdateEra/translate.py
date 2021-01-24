@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: cp949 -*-
+# -*- coding: utf-8 -*-
 
 import seslib
 from utility import *
@@ -54,7 +54,7 @@ def __getlines(f):
     try:
         return f.readlines()
     except:
-        raise TranslateError(u'%s ÀĞ±â ¿¡·¯ (ÀÎÄÚµùÀ» È®ÀÎÇÏ¼¼¿ä)' % f.name)
+        raise TranslateError(u'%s ì½ê¸° ì—ëŸ¬ (ì¸ì½”ë”©ì„ í™•ì¸í•˜ì„¸ìš”)' % f.name)
 
 #Main functions
 
@@ -115,9 +115,9 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
     config = {'riw': riw, 'trim_prefix': trim_prefix, 'force_hash': force_hash}
 
     try:
-        #Phase 0: ÆÄÀÏ ÀĞ±â (TODO: Phase 1/2¿¡ ÅëÇÕ? - Space requirement)
+        #Phase 0: íŒŒì¼ ì½ê¸° (TODO: Phase 1/2ì— í†µí•©? - Space requirement)
 
-        log(u'$ÆÄÀÏ ÀĞ±â')
+        log(u'$íŒŒì¼ ì½ê¸°')
 
         l_oo = __getlines(f_oo)
         l_ot = __getlines(f_ot)
@@ -126,7 +126,7 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
 
         #Phase 1: Preprocessing (prefix and postfix)
 
-        log(u'$Prefix, Postfix ¼±Ã³¸®')
+        log(u'$Prefix, Postfix ì„ ì²˜ë¦¬')
 
         pw = PreprocessWorker(config)
 
@@ -134,7 +134,7 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
         l_ot = map(pw, l_ot)
         l_no = map(pw, l_no)
         
-        #Phase 2: ¹ø¿ª °èÈ¹ ¼ö¸³
+        #Phase 2: ë²ˆì—­ ê³„íš ìˆ˜ë¦½
 
         #mode enum
         MODE_COPY = 1
@@ -148,24 +148,24 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
             force_hash = config['force_hash']
             riw = config['riw']
 
-            #¶óÀÎ¼ö ÀÏÄ¡ È®ÀÎ
+            #ë¼ì¸ìˆ˜ ì¼ì¹˜ í™•ì¸
             if len(l_oo) != len(l_ot):
-                raise LineMatchError(u'¶óÀÎ ¼ö ºÒÀÏÄ¡: %s, %s' % (f_oo.name, f_ot.name))
+                raise LineMatchError(u'ë¼ì¸ ìˆ˜ ë¶ˆì¼ì¹˜: %s, %s' % (f_oo.name, f_ot.name))
 
-            #mode È®ÀÎ ¹× oorest -> n(oo/ot) dictionary »ı¼º
+            #mode í™•ì¸ ë° oorest -> n(oo/ot) dictionary ìƒì„±
 
             mode = MODE_HASH_ONLY
-            changed = len(l_oo) != len(l_no) # ÀÏ´Ü ¶óÀÎ¼ö°¡ ¾È¸ÂÀ¸¸é ´ç¿¬È÷ ¹Ù²ï°Í. ÀÌÇÏ lenÀÌ °°´Ù´Â È®ÀÎÀÌ °¡´É
+            changed = len(l_oo) != len(l_no) # ì¼ë‹¨ ë¼ì¸ìˆ˜ê°€ ì•ˆë§ìœ¼ë©´ ë‹¹ì—°íˆ ë°”ë€ê²ƒ. ì´í•˜ lenì´ ê°™ë‹¤ëŠ” í™•ì¸ì´ ê°€ëŠ¥
             dictionary = {}
-            dictionary_exclude = set() #»çÀü Ãæµ¹½Ã »çÀü¿¡¼­ Áö¿ö¹ö¸± ¸ñ·Ï
+            dictionary_exclude = set() #ì‚¬ì „ ì¶©ëŒì‹œ ì‚¬ì „ì—ì„œ ì§€ì›Œë²„ë¦´ ëª©ë¡
             for n in range(len(l_oo)):
 
                 ooprefix, oorest, oopostfix = l_oo[n]
                 otprefix, otrest, otpostfix = l_ot[n]
 
-                #º¯°æ¿©ºÎ Ã¼Å©
+                #ë³€ê²½ì—¬ë¶€ ì²´í¬
                 if (not changed):
-                    #ÀÏ´Ü ¶óÀÎ¼ö´Â ÀÏÄ¡ÇÏ¹Ç·Î [n]Àº ¾ÈÀü
+                    #ì¼ë‹¨ ë¼ì¸ìˆ˜ëŠ” ì¼ì¹˜í•˜ë¯€ë¡œ [n]ì€ ì•ˆì „
                     noprefix, norest, nopostfix = l_no[n]
                     if ooprefix != noprefix or oorest != norest:
                         changed = True
@@ -176,16 +176,16 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
 
                     if old_otrest != otrest:
                         if force_hash:
-                            log(u'(*°æ°í*) ¹ø¿ª »çÀü Ãæµ¹: ¿øº»ÀÇ %s°¡ ¹ø¿ªº»¿¡¼­ %s ¹× %s µÎ°¡Áö·Î º¯È¯µË´Ï´Ù. (ForceHash: ÀüÀÚ·Î ¹ø¿ªµË´Ï´Ù.)' % (oorest, old_otrest, otrest))
+                            log(u'(*ê²½ê³ *) ë²ˆì—­ ì‚¬ì „ ì¶©ëŒ: ì›ë³¸ì˜ %sê°€ ë²ˆì—­ë³¸ì—ì„œ %s ë° %s ë‘ê°€ì§€ë¡œ ë³€í™˜ë©ë‹ˆë‹¤. (ForceHash: ì „ìë¡œ ë²ˆì—­ë©ë‹ˆë‹¤.)' % (oorest, old_otrest, otrest))
                         else:
                             mode = MODE_SES
-                            log(u'¹ø¿ª »çÀü Ãæµ¹: ¿øº»ÀÇ %s°¡ ¹ø¿ªº»¿¡¼­ %s ¹× %s µÎ°¡Áö·Î º¯È¯µË´Ï´Ù. (ÇØ´ç ¶óÀÎÀº ¹«½ÃµË´Ï´Ù)' % (oorest, old_otrest, otrest))
+                            log(u'ë²ˆì—­ ì‚¬ì „ ì¶©ëŒ: ì›ë³¸ì˜ %sê°€ ë²ˆì—­ë³¸ì—ì„œ %s ë° %s ë‘ê°€ì§€ë¡œ ë³€í™˜ë©ë‹ˆë‹¤. (í•´ë‹¹ ë¼ì¸ì€ ë¬´ì‹œë©ë‹ˆë‹¤)' % (oorest, old_otrest, otrest))
                             dictionary_exclude.add(oorest)
                 else:
                     dictionary[oorest] = n
 
 
-            #È®ÀÎµÈ mode¿¡ µû¸¥ ÈÄÃ³¸®
+            #í™•ì¸ëœ modeì— ë”°ë¥¸ í›„ì²˜ë¦¬
 
             if not changed:
                 mode = MODE_COPY
@@ -196,31 +196,31 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
             #Dictionary reference worker
             lrw = LineRefWorker(dictionary)
 
-            #riw == NoneÀÌ¸é identity function »ı¼º
+            #riw == Noneì´ë©´ identity function ìƒì„±
             if riw == None:
                 riw = lambda x:x
 
             return mode, lrw, riw
 
-        log(u'$¹ø¿ª °èÈ¹ ¼ö¸³')
+        log(u'$ë²ˆì—­ ê³„íš ìˆ˜ë¦½')
 
         mode, lrw, riw = buildplan(config, f_oo, f_ot, f_no)
 
         if mode == MODE_COPY:
-            log(u' -> ±¸¹öÀü ¹× ½Å¹öÀüÀÇ ¿øº» °£¿¡ º¯°æÁ¡ÀÌ ¾ø½À´Ï´Ù.')
+            log(u' -> êµ¬ë²„ì „ ë° ì‹ ë²„ì „ì˜ ì›ë³¸ ê°„ì— ë³€ê²½ì ì´ ì—†ìŠµë‹ˆë‹¤.')
         elif mode == MODE_SES:
-            log(u' -> SES·Î ¹ø¿ªÇÕ´Ï´Ù.')
+            log(u' -> SESë¡œ ë²ˆì—­í•©ë‹ˆë‹¤.')
         else: #mode == MODE_HASH_ONLY:
-            log(u' -> Hash ¹ø¿ªÀ» »ç¿ëÇÕ´Ï´Ù.')
+            log(u' -> Hash ë²ˆì—­ì„ ì‚¬ìš©í•©ë‹ˆë‹¤.')
 
-        #Phase 3: Àû¿ë
+        #Phase 3: ì ìš©
 
-        log(u'$Àû¿ë Áß')
+        log(u'$ì ìš© ì¤‘')
 
         if mode == MODE_COPY:
             #MODE_COPY
-            #when ooprefix == noprefix && oorest == norest for all n (eol postfix »©°í µ¿ÀÏ)
-            # -> l_ot Ãâ·Â (otrest¿¡ riw¸¸ Àû¿ë)
+            #when ooprefix == noprefix && oorest == norest for all n (eol postfix ë¹¼ê³  ë™ì¼)
+            # -> l_ot ì¶œë ¥ (otrestì— riwë§Œ ì ìš©)
             for otprefix, otrest, otpostfix in l_ot:
                 f_nt.write(otprefix)
                 f_nt.write(riw(otrest))
@@ -230,9 +230,9 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
         elif mode == MODE_HASH_ONLY:
             #MODE_HASH_ONLY
             #when no dictionary collision happens OR force_hash is enabled
-            # -> l_no¿¡ ´ëÇØ
-            #    1) match°¡ ÀÖÀ¸¸é: norest¿¡ lrw ¹× riw Àû¿ë, ooprefix->noprefix ses¸¦ otprefix¿¡ Àû¿ë ÈÄ no Ãâ·Â
-            #    2) match°¡ ¾øÀ¸¸é: l_no Ãâ·Â (norest¿¡ riw¸¸ Àû¿ë)
+            # -> l_noì— ëŒ€í•´
+            #    1) matchê°€ ìˆìœ¼ë©´: norestì— lrw ë° riw ì ìš©, ooprefix->noprefix sesë¥¼ otprefixì— ì ìš© í›„ no ì¶œë ¥
+            #    2) matchê°€ ì—†ìœ¼ë©´: l_no ì¶œë ¥ (norestì— riwë§Œ ì ìš©)
 
             #n(oo/ot) -> ses cache
 
@@ -247,27 +247,27 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
                     f_nt.write(nopostfix)
                 else: #match
                     ses = seslib.ses(l_oo[otn][0], noprefix)
-                    #Prefix »ı¼º
+                    #Prefix ìƒì„±
                     pa = PrefixAccumulator(fallback=noprefix)
                     seslib.apply(ses, l_ot[otn][0], noprefix, pa)
                     f_nt.write(pa.result)
                     f_nt.write(riw(l_ot[otn][1]))
                     f_nt.write(nopostfix)
 
-            log(u'ÃÑ %d ÁÙ Áß %d ÁÙÀÌ Ä¡È¯µÇ¾î ÀúÀåµÇ¾ú½À´Ï´Ù.' % (len(l_no), lrw.num_translated_line))
+            log(u'ì´ %d ì¤„ ì¤‘ %d ì¤„ì´ ì¹˜í™˜ë˜ì–´ ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.' % (len(l_no), lrw.num_translated_line))
             return True
         
         else: #mode == MODE_SES:
             #MODE_SES
             #when dictionary collision happens
-            # -> [oorest]->[norest] ses¸¦ [otrest]¿¡ Àû¿ë
-            #    1) otrest Ãâ·Â sequence: ooprefix->noprefix ses¸¦ otprefix¿¡ Àû¿ë, otrest¿¡ riw Àû¿ë ÈÄ ot Ãâ·Â
-            #    2) command i: dictionary È®ÀÎ
-            #       2.1) match°¡ ÀÖÀ¸¸é: norest¿¡ lrw ¹× riw Àû¿ë, ooprefix->noprefix ses¸¦ otprefix¿¡ Àû¿ë ÈÄ no Ãâ·Â
-            #       2.2) match°¡ ¾øÀ¸¸é: l_no Ãâ·Â (norest¿¡ riw¸¸ Àû¿ë)
+            # -> [oorest]->[norest] sesë¥¼ [otrest]ì— ì ìš©
+            #    1) otrest ì¶œë ¥ sequence: ooprefix->noprefix sesë¥¼ otprefixì— ì ìš©, otrestì— riw ì ìš© í›„ ot ì¶œë ¥
+            #    2) command i: dictionary í™•ì¸
+            #       2.1) matchê°€ ìˆìœ¼ë©´: norestì— lrw ë° riw ì ìš©, ooprefix->noprefix sesë¥¼ otprefixì— ì ìš© í›„ no ì¶œë ¥
+            #       2.2) matchê°€ ì—†ìœ¼ë©´: l_no ì¶œë ¥ (norestì— riwë§Œ ì ìš©)
             #    3) command d: -
 
-            #SES »ı¼º
+            #SES ìƒì„±
             seq_oorest = map(lambda x:x[1], l_oo)
             seq_norest = map(lambda x:x[1], l_no)
 
@@ -282,18 +282,18 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
                     self.f_nt = f_nt
                 def __call__(self, seq, otn, total_position):
                     if seq == self.l_ot:
-                        #    1) otrest Ãâ·Â sequence: ooprefix->noprefix ses¸¦ otprefix¿¡ Àû¿ë, otrest¿¡ riw Àû¿ë ÈÄ no Ãâ·Â
+                        #    1) otrest ì¶œë ¥ sequence: ooprefix->noprefix sesë¥¼ otprefixì— ì ìš©, otrestì— riw ì ìš© í›„ no ì¶œë ¥
                         ses = seslib.ses(self.l_oo[otn][0], self.l_no[total_position][0])
-                        #Prefix »ı¼º
+                        #Prefix ìƒì„±
                         pa = PrefixAccumulator(fallback=self.l_no[total_position][0])
                         seslib.apply(ses, self.l_ot[otn][0], self.l_no[total_position][0], pa)
                         self.f_nt.write(pa.result)
                         self.f_nt.write(self.riw(self.l_ot[otn][1]))
                         self.f_nt.write(self.l_no[total_position][2])
                     else: 
-                        #    2) command i: dictionary È®ÀÎ
-                        #       2.1) match°¡ ÀÖÀ¸¸é: norest¿¡ lrw ¹× riw Àû¿ë, ooprefix->noprefix ses¸¦ otprefix¿¡ Àû¿ë ÈÄ no Ãâ·Â
-                        #       2.2) match°¡ ¾øÀ¸¸é: l_no Ãâ·Â (norest¿¡ riw¸¸ Àû¿ë)
+                        #    2) command i: dictionary í™•ì¸
+                        #       2.1) matchê°€ ìˆìœ¼ë©´: norestì— lrw ë° riw ì ìš©, ooprefix->noprefix sesë¥¼ otprefixì— ì ìš© í›„ no ì¶œë ¥
+                        #       2.2) matchê°€ ì—†ìœ¼ë©´: l_no ì¶œë ¥ (norestì— riwë§Œ ì ìš©)
                         noprefix, norest, nopostfix = self.l_no[total_position]
                         otn = lrw(norest)
                 
@@ -303,7 +303,7 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
                             self.f_nt.write(nopostfix)
                         else: #match
                             ses = seslib.ses(self.l_oo[otn][0], noprefix)
-                            #Prefix »ı¼º
+                            #Prefix ìƒì„±
                             pa = PrefixAccumulator()
                             seslib.apply(ses, self.l_ot[otn][0], noprefix, pa)
                             self.f_nt.write(pa.result)
@@ -313,16 +313,16 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
             count_i, count_d = seslib.apply(seslib.ses(seq_oorest, seq_norest), l_ot, l_no, SesModeApplier(l_oo, l_ot, l_no, lrw, riw, f_nt))
             
             if count_i == 0 and count_d == 0:
-                log(u'ÀÏºÎ ÁÙÀÇ Prefix¿¡ º¯È­°¡ ÀÖÀ¸³ª, ÀüÃ¼ ±¸Á¶¿¡´Â Â÷ÀÌ°¡ ¾ø½À´Ï´Ù.')
+                log(u'ì¼ë¶€ ì¤„ì˜ Prefixì— ë³€í™”ê°€ ìˆìœ¼ë‚˜, ì „ì²´ êµ¬ì¡°ì—ëŠ” ì°¨ì´ê°€ ì—†ìŠµë‹ˆë‹¤.')
             else:
-                log(u'ÃÑ %d ÁÙÀÌ Ãß°¡µÇ°í %d ÁÙÀÌ »èÁ¦µÇ¾î ÀúÀåµÇ¾ú½À´Ï´Ù.' % (count_i, count_d))
-                log(u'Ãß°¡µÈ %d ÁÙ Áß %d ÁÙÀÌ Ä¡È¯µÇ¾î ÀúÀåµÇ¾ú½À´Ï´Ù.' % (count_i, lrw.num_translated_line))
+                log(u'ì´ %d ì¤„ì´ ì¶”ê°€ë˜ê³  %d ì¤„ì´ ì‚­ì œë˜ì–´ ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.' % (count_i, count_d))
+                log(u'ì¶”ê°€ëœ %d ì¤„ ì¤‘ %d ì¤„ì´ ì¹˜í™˜ë˜ì–´ ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.' % (count_i, lrw.num_translated_line))
 
             return True
     except:
 #        import traceback
 #        traceback.print_exc()
-        log(u'*** ¿¡·¯·Î ÀÎÇØ Áß´Ü! ***')
+        log(u'*** ì—ëŸ¬ë¡œ ì¸í•´ ì¤‘ë‹¨! ***')
         raise
 
 def copyFile(f_src, f_dst, riw, trim_prefix):
@@ -330,31 +330,31 @@ def copyFile(f_src, f_dst, riw, trim_prefix):
     config = {'riw': riw, 'trim_prefix': trim_prefix}
 
     try:
-        #Phase 0: ÆÄÀÏ ÀĞ±â (TODO: Phase 1/2¿¡ ÅëÇÕ? - Space requirement)
+        #Phase 0: íŒŒì¼ ì½ê¸° (TODO: Phase 1/2ì— í†µí•©? - Space requirement)
 
-        log(u'$ÆÄÀÏ ÀĞ±â')
+        log(u'$íŒŒì¼ ì½ê¸°')
 
         l_src = __getlines(f_src)
 
         #Phase 1: Preprocessing (prefix and postfix)
 
-        log(u'$Prefix, Postfix ¼±Ã³¸®')
+        log(u'$Prefix, Postfix ì„ ì²˜ë¦¬')
 
         pw = PreprocessWorker(config)
         l_src = map(pw, l_src)
 
-        #riw == NoneÀÌ¸é identity function »ı¼º
+        #riw == Noneì´ë©´ identity function ìƒì„±
         if riw == None:
             riw = lambda x:x
         
-        #Phase 2: Àû¿ë
+        #Phase 2: ì ìš©
 
-        log(u'$Àû¿ë Áß')
+        log(u'$ì ìš© ì¤‘')
 
         for srcprefix, srcrest, srcpostfix in l_src:
             f_dst.write(srcprefix)
             f_dst.write(riw(srcrest))
             f_dst.write(srcpostfix)
     except:
-        log(u'*** ¿¡·¯·Î ÀÎÇØ Áß´Ü! ***')
+        log(u'*** ì—ëŸ¬ë¡œ ì¸í•´ ì¤‘ë‹¨! ***')
         raise

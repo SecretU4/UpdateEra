@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# -*- coding: cp949 -*-
+# -*- coding: utf-8 -*-
 
-#ÀÎÄÚµù °ü·Ã À¯Æ¿¸®Æ¼ ¸ğµâ
+#ì¸ì½”ë”© ê´€ë ¨ ìœ í‹¸ë¦¬í‹° ëª¨ë“ˆ
 
 import chardet
 import io
@@ -10,22 +10,22 @@ from utility import *
 
 
 def isAvailableAutodetectMode(autodetect):
-    ''' ÀÚµ¿°¨Áö·Î ¾µ ¼ö ÀÖ´Â°¡ '''
+    ''' ìë™ê°ì§€ë¡œ ì“¸ ìˆ˜ ìˆëŠ”ê°€ '''
     return autodetect == 'no' or autodetect == 'chardet' or autodetect == 'mskanji' or autodetect == 'safedetect'
 
 def open(fn, write, codecname, autodetect):
     if write or (autodetect == 'no'):
         return io.open(fn, {True: 'w', False: 'r'}[write], encoding=codecname)
     elif autodetect == 'chardet' or autodetect == 'mskanji' or autodetect == 'safedetect':
-        #ÀÏ´Ü ÀĞ°íº»´Ù. 
-        # 1. chardet µ¹·Áº¸°í °á°ú°¡ ³ª¿À¸é ±×´ë·Î »ç¿ë
-        # 2. ¾È³ª¿À¸é ±âº» codecnameÀ¸·Î fallback
+        #ì¼ë‹¨ ì½ê³ ë³¸ë‹¤. 
+        # 1. chardet ëŒë ¤ë³´ê³  ê²°ê³¼ê°€ ë‚˜ì˜¤ë©´ ê·¸ëŒ€ë¡œ ì‚¬ìš©
+        # 2. ì•ˆë‚˜ì˜¤ë©´ ê¸°ë³¸ codecnameìœ¼ë¡œ fallback
         with io.open(fn, 'rb') as f:
             buf = f.read()
 
         try:
             if autodetect == 'safedetect':
-                #ÃÊ¹İ BOM¸¸ ÀĞÀ¸¸é ³¡. ¸øÀĞÀ¸¸é mskanji °íÁ¤
+                #ì´ˆë°˜ BOMë§Œ ì½ìœ¼ë©´ ë. ëª»ì½ìœ¼ë©´ mskanji ê³ ì •
                 result = chardet.detect(buf[:10])
             else:
                 result = chardet.detect(buf)
@@ -45,11 +45,11 @@ def open(fn, write, codecname, autodetect):
         except:
             encoding = codecname
 
-        #ÀÏºÎ ÄÚµå°¡ ÆÄÀÏ¸íÀ» ÇÊ¿ä·Î ÇÏ¹Ç·Î
+        #ì¼ë¶€ ì½”ë“œê°€ íŒŒì¼ëª…ì„ í•„ìš”ë¡œ í•˜ë¯€ë¡œ
         file = io.BytesIO(buf)
         setattr(file, 'name', fn)
 
-        log(u' - ÀÎÄÚµù (%s): %s' % (fn, encoding))
+        log(u' - ì¸ì½”ë”© (%s): %s' % (fn, encoding))
 
         return io.TextIOWrapper(file, encoding=encoding)
     else:
