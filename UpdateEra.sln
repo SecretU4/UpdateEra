@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "UpdateEra", "UpdateEra\UpdateEra.pyproj", "{04027AF0-D8AA-4D9A-9125-D413E16C0AF6}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04027AF0-D8AA-4D9A-9125-D413E16C0AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04027AF0-D8AA-4D9A-9125-D413E16C0AF6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{04027AF0-D8AA-4D9A-9125-D413E16C0AF6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04027AF0-D8AA-4D9A-9125-D413E16C0AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04027AF0-D8AA-4D9A-9125-D413E16C0AF6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{04027AF0-D8AA-4D9A-9125-D413E16C0AF6}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
