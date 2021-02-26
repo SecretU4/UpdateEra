@@ -21,7 +21,7 @@
 
 ### 유의사항
 
-본 프로그램은 제가 만든 프로그램이 아닌, *dcinside* 내 익명의 이용자가 올린 소스 코드를 받아 *github*에 올린 것입니다.  
+본 프로그램은 제가 만든 프로그램이 아닌, [*dcinside*](https://gall.dcinside.com/mgallery/board/view/?id=textgame&no=42247) 내 익명의 이용자가 올린 소스 코드를 받아 *github*에 올린 것입니다.  
 당시 해당 글의 작성자분은 자신이 어디서 가져온 것인지 모르는 라이브러리파일을 제외하고 나머지 파일들은 퍼블릭 도메인이라 명시하셨습니다.  
 따라서 본 코드를 웹상에 공유함으로써 집단지성을 활용한 프로그램의 업그레이드와 실사용자의 편리한 접근을 보장하기 위해 본 코드를 *github*에 올리게 되었습니다.  
 만약 본 프로그램 내에서 사용된 외부 모듈(라이브러리)의 출처를 아시는 분이시라면 이슈 트래커로 제보 부탁드립니다.
@@ -42,7 +42,7 @@
 
 This program is from *dcinside*, S.Korea's anonymous community site.  
 I'm just uploader of this program, not the original programmar.  
-The author who posted this article on *dcinside* said this program is in the **public domain** except some of external module that don't know where they come from.  
+The author who posted this article on [*dcinside*](https://gall.dcinside.com/mgallery/board/view/?id=textgame&no=42247) said this program is in the **public domain** except some of external module that don't know where they come from.  
 I, the admin of this repository, upload this program on *github* to develop the program and share it to many people.  
 If you know the source of external module, please let us know on the issue tracker.
 
