@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 
-VERSIONSTRING = u'UpdateEra-0.2.1.0 ($Rev: 55 $)' 
+VERSIONSTRING = u'UpdateEra-0.2.2.0 ($Rev: 57 $)' 
 
 import sys
 
