@@ -11,7 +11,7 @@ __all__ = ['writeExceptionTo', 'log', 'LRU']
 def writeExceptionTo(e, printfunc):
     printfunc(u'\t(에러 내용): ')
     for i in e.args:
-        printfunc(u'\t%s' % unicode(i))
+        printfunc(u'\t%s' % str(i))
 
 class __Log(object):
     def __init__(self):

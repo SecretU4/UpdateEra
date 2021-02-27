@@ -26,7 +26,7 @@ def dirFileList(rootname):
     """
     if not os.path.isdir(rootname):
         raise IOError(u'%s 디렉토리가 존재하지 않습니다.' % rootname)
-    rootpath = os.path.abspath(unicode(rootname))
+    rootpath = os.path.abspath(str(rootname))
 
     ret = set()
     for dirpath, dirs, files in os.walk(rootname):
@@ -168,7 +168,7 @@ def copy_handler(config, fn, src_info, dst_info, output_category, riw, report_ca
     try:
         ensureDir(dst_path)
     except Exception as e:
-        writeExceptionTo(Exception('디렉토리 생성 중 에러: %s' % nt_path, e), log)
+        writeExceptionTo(Exception('디렉토리 생성 중 에러: %s' % dst_path, e), log)
         #Directory 생성에 실패했으므로 doFailedCopy는 부르지 않는다
         report_summary[report_case_failed].append(fn)
         return
@@ -178,7 +178,7 @@ def copy_handler(config, fn, src_info, dst_info, output_category, riw, report_ca
         f_dst = filehandler.open(dst_path, True, dst_encoding, dst_autodetect)
     except Exception as e:
         writeExceptionTo(Exception('파일을 여는 중 에러 (권한 문제인지 확인하세요)', e), log)
-        doFailedCopy(fn, no_basepath, nt_basepath, config['Failed_Out'])
+        doFailedCopy(fn, src_basepath, dst_basepath, config['Failed_Out'])
         report_summary[report_case_failed].append(fn)
         return
     

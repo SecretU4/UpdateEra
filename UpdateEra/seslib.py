@@ -25,6 +25,8 @@ In the edit script, 'i' means insert and 'd' means delete.
 
 ***LICENSE***"""
 
+from __future__ import print_function
+
 #def grid(A, B):
 #    """Print grid.  This is helpful to visualize the search space
 #       when A and B are strings."""
@@ -114,7 +116,7 @@ def ses(sequence1, sequence2, flag="compressed"):
                     else:
                         stop = stop + 1
             else:
-                raise "Unknown Command", "Unexpected command %s" % command
+                raise NotImplementedError("Unexpected command %s" % command)
 
             if endrun:
                 CES.append( ( which, start, stop ) )
@@ -129,8 +131,8 @@ def ses(sequence1, sequence2, flag="compressed"):
             CES.append( ( which, start, stop ) )
 
         if DEBUG:
-            print "Compressed edit script: "
-            print CES
+            print("Compressed edit script: ")
+            print(CES)
 
         return CES
 
@@ -149,7 +151,7 @@ def ses(sequence1, sequence2, flag="compressed"):
                 RCES.append( ('i', start + offset, stop + offset) )
                 offset = offset + (stop - start) + 1
             else:
-                raise "Unknown Command", "Unexpected command %s" % command
+                raise NotImplementedError("Unexpected command %s" % command)
 
         return RCES
         
@@ -194,12 +196,12 @@ def ses(sequence1, sequence2, flag="compressed"):
         FP[Delta] = consider(FP, SES, A, B, M, N, IC, DC, Delta)
 
     if DEBUG:
-        print A
-        print B
-        print "The edit distance is %s" % (Delta + (2 * p) )
-        print "Number of iterations to determine this: %s" % i
-        print "Shortest edit script (uncompressed): "
-        print SES[Delta][1:]
+        print(A)
+        print(B)
+        print("The edit distance is %s" % (Delta + (2 * p) ))
+        print("Number of iterations to determine this: %s" % i)
+        print("Shortest edit script (uncompressed): ")
+        print(SES[Delta][1:])
 
     if flag == "noncompressed":
         CES = map(lambda x: (x[0], x[1], x[1]), SES[Delta][1:])

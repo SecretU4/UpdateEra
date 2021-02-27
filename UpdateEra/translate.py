@@ -130,9 +130,9 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
 
         pw = PreprocessWorker(config)
 
-        l_oo = map(pw, l_oo)
-        l_ot = map(pw, l_ot)
-        l_no = map(pw, l_no)
+        l_oo = list(map(pw, l_oo))
+        l_ot = list(map(pw, l_ot))
+        l_no = list(map(pw, l_no))
         
         #Phase 2: 번역 계획 수립
 

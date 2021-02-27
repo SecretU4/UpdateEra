@@ -27,7 +27,7 @@ def __encoding_check(x):
 
 def __autodetect_check(x):
     if not filehandler.isAvailableAutodetectMode(x):
-        raise LookupError(u'unknown autodetect mode: %s' % autodetect)
+        raise LookupError(u'unknown autodetect mode: %s' % x)
     return str(x)
 
 class __entry(object):
@@ -50,10 +50,10 @@ class __action_check(object):
 
 __settingEntry = {
     #input dirs
-    'OO_Directory': __entry( mandatory=True, encode=unicode, decode=unicode, default='' ),
-    'OT_Directory': __entry( mandatory=True, encode=unicode, decode=unicode, default='' ),
-    'NO_Directory': __entry( mandatory=True, encode=unicode, decode=unicode, default='' ),
-    'NT_Directory': __entry( mandatory=True, encode=unicode, decode=unicode, default='' ),
+    'OO_Directory': __entry( mandatory=True, encode=str, decode=str, default='' ),
+    'OT_Directory': __entry( mandatory=True, encode=str, decode=str, default='' ),
+    'NO_Directory': __entry( mandatory=True, encode=str, decode=str, default='' ),
+    'NT_Directory': __entry( mandatory=True, encode=str, decode=str, default='' ),
 
     'OO_Encoding': __entry( mandatory=False, encode=__encoding_check, decode=__encoding_check, default='utf-8-sig' ),
     'OT_Encoding': __entry( mandatory=False, encode=__encoding_check, decode=__encoding_check, default='utf-8-sig' ),
@@ -67,20 +67,20 @@ __settingEntry = {
 
     #replaceindex file
 
-    'RI_File': __entry( mandatory=False, encode=unicode, decode=unicode, default='' ),
+    'RI_File': __entry( mandatory=False, encode=str, decode=str, default='' ),
     'RI_Encoding': __entry( mandatory=False, encode=__encoding_check, decode=__encoding_check, default='utf-8-sig' ),
     'RI_Autodetect': __entry( mandatory=False, encode=__autodetect_check, decode=__autodetect_check, default='no' ),
 
     #output configuration
 
-    'Case1_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'update' ),
-    'Case2_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'deleted' ),
-    'Case3_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'not_translated' ),
-    'Case4_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'deleted' ),
-    'Case5_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'rare_case' ),
-    'Case6_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'translation_only' ),
-    'Case7_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'new' ),
-    'Failed_Out': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'failed' ),
+    'Case1_Out': __entry( mandatory=False, encode=str, decode=str, default=u'update' ),
+    'Case2_Out': __entry( mandatory=False, encode=str, decode=str, default=u'deleted' ),
+    'Case3_Out': __entry( mandatory=False, encode=str, decode=str, default=u'not_translated' ),
+    'Case4_Out': __entry( mandatory=False, encode=str, decode=str, default=u'deleted' ),
+    'Case5_Out': __entry( mandatory=False, encode=str, decode=str, default=u'rare_case' ),
+    'Case6_Out': __entry( mandatory=False, encode=str, decode=str, default=u'translation_only' ),
+    'Case7_Out': __entry( mandatory=False, encode=str, decode=str, default=u'new' ),
+    'Failed_Out': __entry( mandatory=False, encode=str, decode=str, default=u'failed' ),
 
     #각 case에 치환을 적용할 것인가?
 
@@ -103,13 +103,13 @@ __settingEntry = {
     'Case7_Action': __entry( mandatory=False, encode=__action_check(7), decode=__action_check(7), default='copy-no' ),
 
     #리포트 파일 이름
-    'Report_File': __entry( mandatory=True, encode=unicode, decode=unicode, default=u'report.txt' ),
+    'Report_File': __entry( mandatory=True, encode=str, decode=str, default=u'report.txt' ),
 
     #Hash 번역 강제적용 여부
     'Force_Hash': __entry( mandatory=False, encode=bool, decode=bool, default=False ),
 
     #Trim을 적용할 prefix character
-    'Trim_Prefix': __entry( mandatory=False, encode=unicode, decode=unicode, default=u'' ),
+    'Trim_Prefix': __entry( mandatory=False, encode=str, decode=str, default=u'' ),
 }
 
 #####################################################################################################################################
