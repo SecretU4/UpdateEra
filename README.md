@@ -8,12 +8,14 @@
 
 ### 사용법
 
-#### 실행 프로그램 빌드
+#### 실행 프로그램 빌드 (Python 2 기준)
 
 1. `UpdateEra\build.cmd` 내 `D:\dev\ActivePython-2.7.2.5-win32-x86\python.exe -O setup.py py2exe` 부분에서 *python* 경로를 내 컴퓨터에 설치된 파이썬 경로로 바꿉니다.
 2. `UpdateEra\build.cmd`를 실행합니다. 만약 제대로 작동하지 않거나 글자가 깨진다면 *EUC-KR*, *CP949* 등의 한국어 인코딩으로 다시 시도해주세요.
 
 #### 프로그램 사용
+
+**0.2.2.0** 현재 프로그램 사용시 직접 `UpdateEra.py`를 `bin\UpdateEra.exe`로 빌드한 후에 사용할 수 있습니다.
 
 1. *.srs* 또는 *.simplesrs* 확장자로 양식에 맞게 작성된 데이터베이스 파일을 준비합니다.
 2. *.conf* 파일로 설정을 지정합니다.
@@ -28,9 +30,12 @@
 
 ### 프로그램 정보
 
-* 원본에서 사용된 프로그래밍 언어 : **Python 2** *(2.7.2.5)*
-* 원본 코드 내 기본 인코딩 : **CP949** *(EUC-KR)*
-* 현 코드 내 인코딩 : **UTF-8** (일부 배치파일 제외)
+1. 원본
+  * 프로그래밍 언어 : **Python 2** *(2.7.2.5)*
+  * 기본 인코딩 : **CP949** *(EUC-KR)*
+2. 현재
+  * 프로그래밍 언어 : **Python 3**
+  * 기본 인코딩 : **UTF-8** (일부 배치파일 제외)
 
 ## For English User
 
@@ -48,6 +53,9 @@ If you know the source of external module, please let us know on the issue track
 
 ### Program Information
 
-* Original Programming Language : **Python 2** *(2.7.2.5)*
-* Original In-Code Encoding : **CP949** *(EUC-KR)*
-* Current In-Code Encoding : **UTF-8** except some batch files
+1. Original
+  * Programming Language : **Python 2** *(2.7.2.5)*
+  * In-Code Encoding : **CP949** *(EUC-KR)*
+2. Current
+  * Programming Language : **Python 3**
+  * In-Code Encoding : **UTF-8** except some batch files
