@@ -268,8 +268,8 @@ def updateFile(f_oo, f_ot, f_no, f_nt, riw = None, trim_prefix = '', force_hash 
             #    3) command d: -
 
             #SES 생성
-            seq_oorest = map(lambda x:x[1], l_oo)
-            seq_norest = map(lambda x:x[1], l_no)
+            seq_oorest = list(map(lambda x:x[1], l_oo))
+            seq_norest = list(map(lambda x:x[1], l_no))
 
             class SesModeApplier(object):
                 def __init__(self, l_oo, l_ot, l_no, lrw, riw, f_nt):

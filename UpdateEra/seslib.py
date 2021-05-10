@@ -204,7 +204,7 @@ def ses(sequence1, sequence2, flag="compressed"):
         print(SES[Delta][1:])
 
     if flag == "noncompressed":
-        CES = map(lambda x: (x[0], x[1], x[1]), SES[Delta][1:])
+        CES = list(map(lambda x: (x[0], x[1], x[1]), SES[Delta][1:]))
     else:
         CES = compress(SES[Delta][1:])
 
